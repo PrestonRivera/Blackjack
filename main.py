@@ -64,13 +64,13 @@ def play(deck):
                 if player_score > 21:
                     print("Player Busts!")
             case "stand":
-                while dealer_score < 17:
+                if dealer_score < 17:
                     dealers_cards.append(deck.deal_card())
                     dealer_score = count_cards(dealers_cards)
                     if dealer_score > 21:
                         print("Dealer Busts!")
-                        
-                break
+                    elif who_won(dealer_score, player_score):
+                        break    
             case "quit":
                 break
             case _:
@@ -86,6 +86,10 @@ def who_won(dealer_score, player_score):
         print("Dealer Won!")
     elif player_score <= 21 and player_score > dealer_score:
         print("Player Won!")
+    elif dealer_score > 21 and player_score <= 21:
+        print("Player Won!")
+    elif player_score > 21 and dealer_score <= 21:
+        print("Dealer won!")
 
 
 def count_cards(cards):
@@ -101,14 +105,6 @@ def count_cards(cards):
         else:
             card_total += card[0]
     return card_total
-
-
-
-    
-    
-
-
-
 
 
 if __name__ == "__main__":
