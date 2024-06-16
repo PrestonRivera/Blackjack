@@ -60,42 +60,47 @@ def play(deck):
         cmd = input("Hit or stand? ")
         match cmd:
             case "hit":
-                hit(deck, players_cards)
+                players_cards.append(deck.deal_card())
+                player_score = count_cards(players_cards)
                 if player_score > 21:
-                    print("Player Busts!")
+                    print("Player Busts, Dealer Won!")
+                    break
             case "stand":
-                if dealer_score < 17:
+                while dealer_score < 17:
                     dealers_cards.append(deck.deal_card())
                     dealer_score = count_cards(dealers_cards)
                     if dealer_score > 21:
-                        print("Dealer Busts!")
-                    elif who_won(dealer_score, player_score):
-                        break    
+                        print("Dealer Busts, Player Won!")
+                who_won(dealer_score, player_score)
+                break        
             case "quit":
                 break
             case _:
                 print("Invalid command!")
         
+        
 
 def hit(deck, cards):
     cards.append(deck.deal_card())
-
+ 
 
 def who_won(dealer_score, player_score):
-    if dealer_score <= 21 and dealer_score > player_score:
+    if dealer_score == player_score:
+        print("TIE GAME!")
+    elif dealer_score == 21:
+        print("Dealer has BlackJack!")
+    elif player_score == 21:
+        print("Player has BlackJack!")
+    elif dealer_score > player_score and dealer_score <= 21:
         print("Dealer Won!")
-    elif player_score <= 21 and player_score > dealer_score:
+    elif player_score > dealer_score and player_score <= 21:
         print("Player Won!")
-    elif dealer_score > 21 and player_score <= 21:
-        print("Player Won!")
-    elif player_score > 21 and dealer_score <= 21:
-        print("Dealer won!")
 
 
 def count_cards(cards):
     card_total = 0
     for card in cards:
-        if card[0] in ["j", "Q", "K"]:
+        if card[0] in ["J", "Q", "K"]:
             card_total += 10
         elif card[0] == "A":
             if (card_total + 11) > 21:
