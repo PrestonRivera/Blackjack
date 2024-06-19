@@ -48,6 +48,9 @@ def play(deck):
     players_cards = []
 
 
+
+
+
     for _ in range(2):
         dealers_cards.append(deck.deal_card())
         players_cards.append(deck.deal_card())
@@ -75,14 +78,16 @@ def play(deck):
                 print("Invalid command!")
     if player_busts:
         print(f"Dealers cards: {dealers_cards} = {dealer_score}\nPlayers cards: {players_cards} = {player_score}")
-        print("Player Busts, Dealer Won!")
+        print("Player Busts!")
+        print("Dealer Won!")
     else:
         while dealer_score < 17:
             dealers_cards.append(deck.deal_card())
             dealer_score = count_cards(dealers_cards)
             print(f"Dealers cards: {dealers_cards} = {dealer_score}\nPlayers cards: {players_cards} = {player_score}")
             if dealer_score > 21:
-                print("Dealer Busts, Player Won!")
+                print("Dealer Busts!")
+                print("Player Won!")
     who_won(dealer_score, player_score)
         
         
@@ -96,8 +101,10 @@ def who_won(dealer_score, player_score):
         print("TIE GAME!")
     elif dealer_score == 21:
         print("Dealer has BlackJack!")
+        print("Dealer Wins!")
     elif player_score == 21:
         print("Player has BlackJack!")
+        print("Player Wins!")
     elif dealer_score > player_score and dealer_score <= 21:
         print("Dealer Won!")
     elif player_score > dealer_score and player_score <= 21:
@@ -119,13 +126,15 @@ def count_cards(cards):
     return card_total
 
 
+
+
+
+
+
+
 if __name__ == "__main__":
     cards = DeckOfCards()
     play(cards)
-
-
-
-
 
 
 
