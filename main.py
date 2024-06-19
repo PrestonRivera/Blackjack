@@ -48,7 +48,7 @@ def play(deck):
     players_cards = []
 
 
-    for i in range(2):
+    for _ in range(2):
         dealers_cards.append(deck.deal_card())
         players_cards.append(deck.deal_card())
 
@@ -57,26 +57,33 @@ def play(deck):
         dealer_score = count_cards(dealers_cards)
         player_score = count_cards(players_cards)
         print(f"Dealers cards: {dealers_cards} = {dealer_score}\nPlayers cards: {players_cards} = {player_score}")
+        player_busts = False
         cmd = input("Hit or stand? ")
         match cmd:
             case "hit":
                 players_cards.append(deck.deal_card())
                 player_score = count_cards(players_cards)
                 if player_score > 21:
-                    print("Player Busts, Dealer Won!")
+                    player_busts = True
                     break
             case "stand":
-                while dealer_score < 17:
-                    dealers_cards.append(deck.deal_card())
-                    dealer_score = count_cards(dealers_cards)
-                    if dealer_score > 21:
-                        print("Dealer Busts, Player Won!")
-                who_won(dealer_score, player_score)
+                player_busts = False
                 break        
             case "quit":
                 break
             case _:
                 print("Invalid command!")
+    if player_busts:
+        print(f"Dealers cards: {dealers_cards} = {dealer_score}\nPlayers cards: {players_cards} = {player_score}")
+        print("Player Busts, Dealer Won!")
+    else:
+        while dealer_score < 17:
+            dealers_cards.append(deck.deal_card())
+            dealer_score = count_cards(dealers_cards)
+            print(f"Dealers cards: {dealers_cards} = {dealer_score}\nPlayers cards: {players_cards} = {player_score}")
+            if dealer_score > 21:
+                print("Dealer Busts, Player Won!")
+    who_won(dealer_score, player_score)
         
         
 
